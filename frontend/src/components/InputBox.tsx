@@ -1,5 +1,3 @@
-import { ChangeEvent } from "preact/compat";
-
 interface InputBoxInputs {
   label: string;
   placeholder: string;
