@@ -3,3 +3,4 @@ backend/.wrangler
 backend/wrangler.toml
 common/node_modules
 common/dist
+backend/.env
