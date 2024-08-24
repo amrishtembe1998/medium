@@ -11,11 +11,14 @@ interface Blog {
   author: { name: string };
 }
 
+interface UserInfo {
+  user: { id: string; name: string; email: string; password: string };
+}
+
 export const useBlog = (id: string) => {
   const [loading, setLoading] = useState(true);
   const [blog, setBlog] = useState<Blog>();
   useEffect(() => {
-    console.log(`${BACKEND_URL}/api/v1/blog/${id}`);
     async function fetchBlog() {
       const response = await axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -54,4 +57,20 @@ export const useBlogs = () => {
     loading,
     blogs,
   };
+};
+
+export const useUserInfo = () => {
+  const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState<UserInfo>();
+  useEffect(() => {
+    async function fetchUserInfo() {
+      const response = await axios.get(`${BACKEND_URL}/api/v1/user`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setUserInfo(response.data);
+      setLoading(false);
+    }
+    fetchUserInfo();
+  }, []);
+  return { loading, userInfo };
 };

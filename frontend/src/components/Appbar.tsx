@@ -1,3 +1,4 @@
+import { useUserInfo } from "../hooks";
 import { Avatar } from "./BlogCard";
 import { Link } from "react-router-dom";
 
@@ -6,6 +7,8 @@ interface AppbarProps {
 }
 
 export const Appbar: React.FC<AppbarProps> = ({ publishButton }) => {
+  const { loading, userInfo } = useUserInfo();
+  console.log(userInfo?.user);
   return (
     <div className="border-b-2 py-4 flex justify-between px-10">
       <Link to={"/blogs"}>
@@ -23,7 +26,14 @@ export const Appbar: React.FC<AppbarProps> = ({ publishButton }) => {
               Publish new Blog
             </button>
           </Link>
-          <Avatar size={"big"} authorName={"Amrish Tembe"} />
+          {!loading ? (
+            <Avatar
+              size={"big"}
+              authorName={userInfo?.user.name || "Anonymous User"}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       ) : null}
     </div>
